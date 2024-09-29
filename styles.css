@@ -1,0 +1,51 @@
+body{
+    font-family: 'Roboto';
+    color: white;
+}
+.container{
+    width: 300px;
+    height: 500px;
+    position: relative;
+    margin: 0px auto;
+    background-size: cover;
+    border-radius: 20px;
+}
+h1{
+    font-weight:300;
+}
+#cityField{
+    width: 200px;
+    height: 15px;
+    padding: 20px;
+    text-align: center;
+    border-radius: 50px;
+    outline: none;
+    border: none;
+    font-family: 'Roboto';
+    font-size: 1em;
+    margin: 15px 10%;
+}
+#temperatureDisplay{
+    font-size: 100px;
+    margin-top: 0;
+    margin-left:15%;
+    margin-right: 15%;
+    margin-bottom: 0px;
+    text-align: center;
+}
+#cityDisplay{
+    margin: 0;
+    text-align: center;
+}
+img{
+    margin: 0px 16%;
+    width: 200px;
+    height: 200px;
+}
+#weatherCondition{
+    margin: 0;
+    text-align: center;
+}
+#liveLocation{
+    margin: 50px 47%;
+}
