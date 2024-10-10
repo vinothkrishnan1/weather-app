@@ -28,11 +28,10 @@ const allIcons = {
     "50d": "foog.png",
     "50n": "foog.png"
 };
-loginForm.addEventListener("submit", (e) => {
-    e.preventDefault();
+loginForm.addEventListener("submit", (a) => {
+    a.preventDefault();
     let word = cityField.value;
     axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${word}&appid=${apiKey}&units=metric`).then((response) => {
-        console.log(response);
         let code = (response.data.weather[0].icon);
         cityField.value = null;
         cityField.blur();
@@ -51,31 +50,51 @@ loginForm.addEventListener("submit", (e) => {
             weatherCondition.textContent = response.data.weather[0].description;
         }
     })
-})
-    let latitudes;
-    let longitudes;
-    function showPosition(position) {
-        latitudes = position.coords.latitude;
-        longitudes = position.coords.longitude;
-    }
-    navigator.geolocation.getCurrentPosition(showPosition);
-    liveLocation.addEventListener("click", () => {
-        axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitudes}&lon=${longitudes}&appid=${apiKey}&units=metric`).then((response) => {
-            let code = (response.data.weather[0].icon);
-            if (code[(code.length) - 1] === 'd') {
-                cityDisplay.textContent = response.data.name;
-                temperatureDisplay.innerHTML = Math.floor(response.data.main.temp) + "&deg;C";
-                container.style.backgroundImage = "url('blue-sky-background.jpg')";
-                weatherIcons.src = `${allIcons[code]}`;
-                weatherCondition.textContent = response.data.weather[0].description;
+        .catch((e) => {
+            if(e==="AxiosError: Network Error"){
+                alert(e);
             }
-            else if (code[(code.length) - 1] === 'n') {
-                cityDisplay.textContent = response.data.name;
-                temperatureDisplay.innerHTML = Math.floor(response.data.main.temp) + "&deg;C";
-                container.style.backgroundImage = "url('rylan-hill-3o6NXErKXwo-unsplash.jpg')";
-                weatherIcons.src = `${allIcons[code]}`;
-                weatherCondition.textContent = response.data.weather[0].description;
+            else{
+                alert("Error: " + e.response.data.message);
             }
-        })
+            
+        });
     
+})
+let latitudes;
+let longitudes;
+function showPosition(position) {
+    latitudes = position.coords.latitude;
+    longitudes = position.coords.longitude;
+}
+navigator.geolocation.getCurrentPosition(showPosition);
+liveLocation.addEventListener("click", () => {
+    axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitudes}&lon=${longitudes}&appid=${apiKey}&units=metric`).then((response) => {
+        let code = (response.data.weather[0].icon);
+        if (code[(code.length) - 1] === 'd') {
+            cityDisplay.textContent = response.data.name;
+            temperatureDisplay.innerHTML = Math.floor(response.data.main.temp) + "&deg;C";
+            container.style.backgroundImage = "url('blue-sky-background.jpg')";
+            weatherIcons.src = `${allIcons[code]}`;
+            weatherCondition.textContent = response.data.weather[0].description;
+        }
+        else if (code[(code.length) - 1] === 'n') {
+            cityDisplay.textContent = response.data.name;
+            temperatureDisplay.innerHTML = Math.floor(response.data.main.temp) + "&deg;C";
+            container.style.backgroundImage = "url('rylan-hill-3o6NXErKXwo-unsplash.jpg')";
+            weatherIcons.src = `${allIcons[code]}`;
+            weatherCondition.textContent = response.data.weather[0].description;
+        }
+    })
+    .catch((e) => {
+        if(e==="AxiosError: Network Error"){
+            alert(e);
+        }
+        else{
+            alert("Error: " + e.response.data.message);
+        }
+        
+    });
+        
+
 })
